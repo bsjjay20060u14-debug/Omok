@@ -8,10 +8,25 @@ public class main {
         System.out.println("게임 시작!");
 
         int[][] board = new int[15][15];
+        System.out.print("     ");
 
-        for(int i=0; i<board.length; i++){
+        for (int i=0;i<board.length;i++){
+            if(i<10 && i!=0) {
+                    System.out.print(" ");
+                }
+                System.out.print(i + " ");
+                if (i==board.length-1){
+                    System.out.println();
+                }
+        }
+            
+        for(int i = 0, k=0; i<board.length; i++, k++){
+            if(k<10) {
+                System.out.print(" ");
+            }
+            System.out.print(" "+ k + " ");
             for(int j=0; j<board[i].length; j++){
-                System.out.print(". ");
+                System.out.print(" . ");
             }
             System.out.println();
         }
