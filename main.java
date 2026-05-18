@@ -8,13 +8,27 @@ class PlaceStone{
             System.out.println("흑돌 차례입니다. x, y좌표를 입력해주세요.");
                 int x = scanner.nextInt();
                 int y = scanner.nextInt();
-            board[y][x]=1;
+
+            if(board[y][x]==0){
+                board[y][x]=1;
+            }
+                else {
+                    System.out.println("이미 돌이 놓여있는 좌표입니다. 다시 입력해주세요.");
+                    n--;
+                }
         }
         if(n%2==0){
             System.out.println("백돌 차례입니다. x, y좌표를 입력해주세요.");
                 int x = scanner.nextInt();
                 int y = scanner.nextInt();
-            board[y][x]=2;
+                
+            if(board[y][x]==0){
+                board[y][x]=2;
+            }
+                else {
+                    System.out.println("이미 돌이 놓여있는 좌표입니다. 다시 입력해주세요.");
+                    n--;
+                }
         }
     }
 }
