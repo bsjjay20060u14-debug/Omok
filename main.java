@@ -4,10 +4,15 @@ import java.lang.ArrayIndexOutOfBoundsException;
 class PlaceStone{
     public static void stoneLocation(int[][] board){
         Scanner scanner = new Scanner(System.in);
-        if(main.e==1){
+        if(main.e==1){//에러 발생 시에 다시 보드 출력 후에 문장을 출력하기 위해 수정
                 System.out.println("잘못된 좌표입니다. 다시 입력해주세요.");
                 main.e=0;
             }
+            else if(main.e==2){
+                System.out.println("이미 돌이 있는 좌표입니다. 다시 입력해주세요.");
+                main.e=0;
+            }
+            
         if(main.n%2==1){//n이 홀수면 흑돌, 짝수면 백돌
             System.out.println("흑돌 차례입니다. x, y좌표를 입력해주세요.");
                 int x = scanner.nextInt();
@@ -17,7 +22,7 @@ class PlaceStone{
                 board[y][x]=1;
             }
                 else {
-                    System.out.println("이미 돌이 놓여있는 좌표입니다. 다시 입력해주세요.");
+                    main.e=2;
                     main.n--;
                 }
         }
@@ -30,7 +35,7 @@ class PlaceStone{
                 board[y][x]=2;
             }
                 else {
-                    System.out.println("이미 돌이 놓여있는 좌표입니다. 다시 입력해주세요.");
+                    main.e=2;
                     main.n--;
                 }
         }
