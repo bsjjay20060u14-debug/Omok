@@ -2,8 +2,8 @@ import java.util.Scanner;
 import java.lang.ArrayIndexOutOfBoundsException;
 
 class PlaceStone{
-    public static void stoneLocation(int[][] board){
-        Scanner scanner = new Scanner(System.in);
+    public static void stoneLocation(int[][] board, Scanner scanner) {
+        
         if(main.e==1){//에러 발생 시에 다시 보드 출력 후에 문장을 출력하기 위해 수정
                 System.out.println("잘못된 좌표입니다. 다시 입력해주세요.");
                 main.e=0;
@@ -12,7 +12,7 @@ class PlaceStone{
                 System.out.println("이미 돌이 있는 좌표입니다. 다시 입력해주세요.");
                 main.e=0;
             }
-            
+
         if(main.n%2==1){//n이 홀수면 흑돌, 짝수면 백돌
             System.out.println("흑돌 차례입니다. x, y좌표를 입력해주세요.");
                 int x = scanner.nextInt();
@@ -87,7 +87,7 @@ public class main {
             main.n++;
 
             try{
-                PlaceStone.stoneLocation(board);
+                PlaceStone.stoneLocation(board, scanner);//메인의 스캐너를 클래스에서 사용하도록 수정
             } 
             catch(ArrayIndexOutOfBoundsException e){
                 main.e=1;
