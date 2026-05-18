@@ -1,19 +1,34 @@
 import java.util.Scanner;
+import java.lang.ArrayIndexOutOfBoundsException;
+
 class PlaceStone{
     public static void stoneLocation(int[][] board, int n){
+        Scanner scanner = new Scanner(System.in);
         if(n%2==1){//n이 홀수면 흑돌, 짝수면 백돌
             System.out.println("흑돌 차례입니다. x, y좌표를 입력해주세요.");
-                Scanner scanner = new Scanner(System.in);
                 int x = scanner.nextInt();
                 int y = scanner.nextInt();
-            board[y][x]=1;
+
+            if(board[y][x]==0){
+                board[y][x]=1;
+            }
+                else {
+                    System.out.println("이미 돌이 놓여있는 좌표입니다. 다시 입력해주세요.");
+                    n--;
+                }
         }
         if(n%2==0){
             System.out.println("백돌 차례입니다. x, y좌표를 입력해주세요.");
-                Scanner scanner = new Scanner(System.in);
                 int x = scanner.nextInt();
                 int y = scanner.nextInt();
-            board[y][x]=2;
+                
+            if(board[y][x]==0){
+                board[y][x]=2;
+            }
+                else {
+                    System.out.println("이미 돌이 놓여있는 좌표입니다. 다시 입력해주세요.");
+                    n--;
+                }
         }
     }
 }
@@ -59,7 +74,14 @@ public class main {
                 System.out.println();
             }
             n++;
-            PlaceStone.stoneLocation(board, n);
+
+            try{
+                PlaceStone.stoneLocation(board, n);
+            } 
+            catch(ArrayIndexOutOfBoundsException e){
+                System.out.println("잘못된 좌표입니다. 다시 입력해주세요.");
+                n--;
+            }
         }
     }
 }
