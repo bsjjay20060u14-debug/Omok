@@ -3,42 +3,69 @@ import java.lang.ArrayIndexOutOfBoundsException;
 
 class CountStone {
     public static boolean Winner(int[][] board, int y, int x, int stone) {
-        //각각 방향 세로, 가로, 우하향대각선, 좌하향대각선
-        int[][] directions = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};
 
-        for (int[] d : directions) {
-            int count = 1; // 현재 돌을 포함해서 1로 시작
-
-            // 1. 한쪽(정방향)으로 최대 4칸 세기
-            for (int i = 1; i <= 4; i++) {
-                int ny = y + (d[0] * i);
-                int nx = x + (d[1] * i);
-
-                if (ny >= 0 && ny < 15 && nx >= 0 && nx < 15 && board[ny][nx] == stone) {
-                    count++;
-                } else {
-                    break; // 돌이 끊기면 즉시 중단
-                }
-            }
-
-            // 2. 반대쪽(역방향)으로 최대 4칸 세기 (d[0], d[1]에 마이너스만 붙임!)
-            for (int i = 1; i <= 4; i++) {
-                int ny = y + (-d[0] * i);
-                int nx = x + (-d[1] * i);
-
-                if (ny >= 0 && ny < 15 && nx >= 0 && nx < 15 && board[ny][nx] == stone) {
-                    count++;
-                } else {
-                    break; // 돌이 끊기면 즉시 중단
-                }
-            }
-
-            // 3. 정방향 + 역방향 + 내 돌을 다 합친 count가 5 이상이면 승리!
-            if (count >= 5) {
-                return true;
-            }
+        int count;
+        //넘버패드 기준으로 설명
+        count = 1;//마지막 돌 포함해서 1로 초기화(마지막 돌=넘버패드의 5번 위치일때)
+        for (int i=1; i<=4; i++) {//6번 방향 검사
+            int dx=x+i;
+            if (dx>14 || board[y][dx]!=stone) break;
+            count++;
         }
-        return false; 
+        for (int i=1; i<=4; i++) {//4번 방향 검사
+            int dx=x-i;
+            if (dx<0 || board[y][dx]!=stone) break;
+            count++;
+        }
+        if (count>=5) return true;
+
+        //상하 검사
+        count = 1;
+        for (int i=1; i<=4; i++) {//2번 방향 검사
+            int dy=y+i;
+            if (dy>14 || board[dy][x]!=stone) break;
+            count++;
+        }
+        for (int i=1; i<=4; i++) {//8번 방향 검사
+            int dy=y-i;
+            if (dy<0 || board[dy][x]!=stone) break;
+            count++;
+        }
+        if (count>=5) return true;
+
+        //우하향 대각선 검사
+        count = 1;
+        for (int i=1; i<=4; i++) {//3번 방향 검사
+            int dy=y+i;
+            int dx=x+i;
+            if (dy>14 || dx>14 || board[dy][dx]!=stone) break;
+            count++;
+        }
+        for (int i=1; i<=4; i++) {//7번 방향 검사
+            int dy=y-i;
+            int dx=x-i;
+            if (dy<0 || dx<0 || board[dy][dx]!=stone) break;
+            count++;
+        }
+        if (count>=5) return true;
+
+        //좌하향 대각선 검사
+        count = 1;
+        for (int i=1; i<=4; i++) {//1번 방향 검사
+            int dy=y+i;
+            int dx=x-i;
+            if (dy>14 || dx<0 || board[dy][dx]!=stone) break;
+            count++;
+        }
+        for (int i=1; i<=4; i++) {//9번 방향 검사
+            int dy=y-i;
+            int dx=x+i;
+            if (dy<0 || dx>14 || board[dy][dx]!=stone) break;
+            count++;
+        }
+        if (count>=5) return true;
+
+        return false;//네 가지 선 모두 5개가 안 되면 승리 아님
     }
 }
 
