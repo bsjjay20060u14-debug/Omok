@@ -182,6 +182,10 @@ public class main {
                     }
                     break;
                 }
+                else if(main.n==225) {
+                    System.out.println("무승부입니다.");
+                    break;
+                }
             }
 
             main.n++;
