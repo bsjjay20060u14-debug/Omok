@@ -117,40 +117,77 @@ class PlaceStone{
             System.out.println("이미 돌이 있는 좌표입니다. 다시 입력해주세요.");
             main.e=0;
         }
+        else if(main.e==3){
+            System.out.println("정수를 입력해주세요.");
+            main.e=0;
+        }
 
         if(main.n%2==1){//n이 홀수면 흑돌, 짝수면 백돌
             System.out.println("흑돌 차례입니다. x, y좌표를 입력해주세요.");
-            int x = scanner.nextInt();
+           if(scanner.hasNextInt()){
+        int x = scanner.nextInt();
+
+        if(scanner.hasNextInt()){
             int y = scanner.nextInt();
 
             if(board[y][x]==0){
                 board[y][x]=1;
-                
-                main.lastX = x;//마지막 돌의 위치를 저장
+
+                main.lastX = x;
                 main.lastY = y;
-                
             }
-            else {
+            else{
                 main.e=2;
                 main.n--;
             }
+
+        }
+        else{
+            main.e=3;
+            scanner.next();
+            main.n--;
+        }
+
+    }
+    else{
+        main.e=3;
+        scanner.next();
+        main.n--;
+    }
         }
         
         else if(main.n%2==0){//이유는 모르겠으나 오류 발생해서 else if로 수정함
             System.out.println("백돌 차례입니다. x, y좌표를 입력해주세요.");
-            int x = scanner.nextInt();
+           if(scanner.hasNextInt()){
+        int x = scanner.nextInt();
+
+        if(scanner.hasNextInt()){
             int y = scanner.nextInt();
-            
+
             if(board[y][x]==0){
                 board[y][x]=2;
 
-                main.lastX = x;//마지막 돌의 위치를 저장
+                main.lastX = x;
                 main.lastY = y;
             }
-            else {
+            else{
                 main.e=2;
                 main.n--;
             }
+
+        }
+        else{
+            main.e=3;
+            scanner.next();
+            main.n--;
+        }
+
+    }
+    else{
+        main.e=3;
+        scanner.next();
+        main.n--;
+    }
         }
     }
 }
@@ -192,7 +229,7 @@ public class main {
 
             try{
                 PlaceStone.stoneLocation(board, scanner);//메인의 스캐너를 클래스에서 사용하도록 수정
-            } 
+            }
             catch(ArrayIndexOutOfBoundsException e){
                 main.e=1;
                 main.n--;
