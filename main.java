@@ -4,61 +4,96 @@ import java.lang.ArrayIndexOutOfBoundsException;
 class CountStone {
     public static int getCounts(int[][] board, int y, int x, int stone) {
 
-        int count=1,open=0,three=0;
+        int count1=1,count2=1,open=0,three=0,skip1=0,skip2=0;
         //넘버패드 기준으로 설명
         for (int i=1; i<=4; i++) {//6번 방향 검사
             int dx=x+i;
             if (dx>14) break; //범위 넘어가면 끝
-            if (board[y][dx]==stone) count++; //현재 돌과 같은 돌이면 count++
-            else if(board[y][dx]==0) { //빈 칸이면 open++하고 break
-                open++; break;
+            if (board[y][dx]==stone) { //현재 돌과 같은 돌이면 count++
+                count1++; 
+                if(skip1==0) 
+                    count2++; 
+            }
+            else if(board[y][dx]==0) { //빈 칸이면
+                if((skip1+skip2)==0 && dx+1<=14 && board[y][dx+1]==stone) skip1++; //다음 칸이 현재 돌일 때 1번 스킵 
+                else { 
+                    open++; break; 
+                } //아니면 open++하고 break
             }
             else break;// 상대 돌이면 끝
         }
         for (int i=1; i<=4; i++) {//4번 방향 검사
             int dx=x-i;
             if (dx<0) break;
-            if (board[y][dx]==stone) count++;
+            if (board[y][dx]==stone) { //현재 돌과 같은 돌이면 count++
+                count1++; 
+                if(skip2==0) 
+                    count2++; 
+            }
             else if(board[y][dx]==0) {
-                open++; break;
+                if((skip1+skip2)==0 && dx-1>=0 && board[y][dx-1]==stone) skip2++;
+                else { 
+                    open++; break; 
+                }
             }
             else break;
         }
-        if (count>=5) return 1;
-        if (count==3 && open==2) three++;//33조건에 부합하면 three++
+        if (count2>=5) return 1;
+        if (count1==3 && open==2) three++;//33조건에 부합하면 three++
 
         //상하 검사
-        count = 1; open = 0;
+        count1 = 1; count2 = 1; open = 0; skip1 = 0; skip2 = 0;
         for (int i=1; i<=4; i++) {//2번 방향 검사
             int dy=y+i;
             if (dy>14) break;
-            if (board[dy][x]==stone) count++;
+            if (board[dy][x]==stone) { 
+                count1++; 
+                if(skip1==0) 
+                    count2++; 
+            }
             else if(board[dy][x]==0) {
-                open++; break;
+                if((skip1+skip2)==0 && dy+1<=14 && board[dy+1][x]==stone) skip1++;
+                else { 
+                    open++; break; 
+                }
             }
             else break;
         }
         for (int i=1; i<=4; i++) {//8번 방향 검사
             int dy=y-i;
             if (dy<0) break;
-            if (board[dy][x]==stone) count++;
+            if (board[dy][x]==stone) { 
+                count1++; 
+                if(skip2==0) 
+                    count2++; 
+            }
             else if(board[dy][x]==0) {
-                open++; break;
+                if((skip1+skip2)==0 && dy-1>=0 && board[dy-1][x]==stone) skip2++;
+                else { 
+                    open++; break; 
+                }
             }
             else break;
         }
-        if (count>=5) return 1;
-        if (count==3 && open==2) three++;
+        if (count2>=5) return 1;
+        if (count1==3 && open==2) three++;
 
         //우하향 대각선 검사
-        count = 1; open = 0;
+        count1 = 1; count2 = 1; open = 0; skip1 = 0; skip2 = 0;
         for (int i=1; i<=4; i++) {//3번 방향 검사
             int dy=y+i;
             int dx=x+i;
             if (dy>14 || dx>14) break;
-            if (board[dy][dx]==stone) count++;
+            if (board[dy][dx]==stone) { 
+                count1++; 
+                if(skip1==0) 
+                    count2++; 
+            }
             else if(board[dy][dx]==0) {
-                open++; break;
+                if((skip1+skip2)==0 && dy+1<=14 && dx+1<=14 && board[dy+1][dx+1]==stone) skip1++;
+                else { 
+                    open++; break; 
+                }
             }
             else break;
         }
@@ -66,24 +101,38 @@ class CountStone {
             int dy=y-i;
             int dx=x-i;
             if (dy<0 || dx<0) break;
-            if (board[dy][dx]==stone) count++;
+            if (board[dy][dx]==stone) { 
+                count1++; 
+                if(skip2==0) 
+                    count2++; 
+            }
             else if(board[dy][dx]==0) {
-                open++; break;
+                if((skip1+skip2)==0 && dy-1>=0 && dx-1>=0 && board[dy-1][dx-1]==stone) skip2++;
+                else { 
+                    open++; break; 
+                }
             }
             else break;
         }
-        if (count>=5) return 1;
-        if (count==3 && open==2) three++;
+        if (count2>=5) return 1;
+        if (count1==3 && open==2) three++;
 
         //좌하향 대각선 검사
-        count = 1; open = 0;
+        count1 = 1; count2 = 1; open = 0; skip1 = 0; skip2 = 0;
         for (int i=1; i<=4; i++) {//1번 방향 검사
             int dy=y+i;
             int dx=x-i;
             if (dy>14 || dx<0) break;
-            if (board[dy][dx]==stone) count++;
+            if (board[dy][dx]==stone) { 
+                count1++; 
+                if(skip1==0) 
+                    count2++; 
+            }
             else if(board[dy][dx]==0) {
-                open++; break;
+                if((skip1+skip2)==0 && dy+1<=14 && dx-1>=0 && board[dy+1][dx-1]==stone) skip1++;
+                else { 
+                    open++; break; 
+                }
             }
             else break;
         }
@@ -91,14 +140,21 @@ class CountStone {
             int dy=y-i;
             int dx=x+i;
             if (dy<0 || dx>14) break;
-            if (board[dy][dx]==stone) count++;
+            if (board[dy][dx]==stone) { 
+                count1++; 
+                if(skip2==0) 
+                    count2++; 
+            }
             else if(board[dy][dx]==0) {
-                open++; break;
+                if((skip1+skip2)==0 && dy-1>=0 && dx+1<=14 && board[dy-1][dx+1]==stone) skip2++;
+                else { 
+                    open++; break; 
+                }
             }
             else break;
         }
-        if (count>=5) return 1;
-        if (count==3 && open==2) three++;
+        if (count2>=5) return 1;
+        if (count1==3 && open==2) three++;
 
         if (three>=2) return 2; //three가 2개 이상이면 33
         return 0;//네 가지 선 모두 5개가 안 되면 승리 아님
